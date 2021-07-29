@@ -1,0 +1,11 @@
+{
+  "name": "object_state",
+  "version": "1.0.0",
+  "description": "State Machine Objects",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": ["fsm", "state machines"],
+  "email": "edgar.segundo@gmail.com",
+  "author": "edre",
+  "license": "MIT"
+}
