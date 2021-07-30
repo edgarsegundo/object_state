@@ -8,17 +8,6 @@
 
 module.exports.create = create
 
-function create() {
-    return ObjectState()
-}
-
-function htmlLog(error) {
-    var elem = document.createElement('div');
-    elem.classList.add("fixed")
-    elem.innerHTML = `<strong>An error happened&nbsp:&nbsp</strong>${error}</div>`
-    document.body.appendChild(elem)
-}
-
 function ObjectState() {
     var _statePrevious = undefined
     var _stateCurrent = undefined
@@ -42,14 +31,12 @@ function ObjectState() {
     
                 if (state instanceof Array) {
                     listState = state;
-                } else {
-                    listState = [state];
+                } else { listState = [state];
                 }
     
                 if (event instanceof Array) {
                     listEvent = event;
-                } else {
-                    listEvent = [event];
+                } else { listEvent = [event];
                 }
     
                 listState.forEach((stateElem) => {
@@ -59,11 +46,10 @@ function ObjectState() {
                 });
             }
             else {
-                events = {};
+                let events = {};
                 if (!_transitions.hasOwnProperty(state)) {
                     let list = [];
                     list.push(action);
-                    events = {};
                     events[event] = list;
                     _transitions[state] = events;
                 } else {
@@ -82,7 +68,7 @@ function ObjectState() {
         fire: async function (event, obj) {
             try {
                 if (_transitions.hasOwnProperty(_stateCurrent)) {
-                    events = _transitions[_stateCurrent];    
+                    let events = _transitions[_stateCurrent];    
                     if (events.hasOwnProperty(event)) {
                       let list = events[event];    
                       for (let i = 0; i < list.length; i += 1) {
@@ -114,4 +100,15 @@ function ObjectState() {
             return _statePrevious;
         }    
     }
+}
+
+function create() {
+    return ObjectState()
+}
+
+function htmlLog(error) {
+    var elem = document.createElement('div');
+    elem.classList.add("fixed")
+    elem.innerHTML = `<strong>An error happened&nbsp:&nbsp</strong>${error}</div>`
+    document.body.appendChild(elem)
 }
