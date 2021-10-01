@@ -107,18 +107,18 @@ function create() {
 }
 
 function htmlLog(error) {
-    var elem = document.createElement('div');
-    elem.classList.add("fixed")
-    elem.innerHTML = `<strong>An error happened&nbsp:&nbsp</strong>${error}</div>`
-
     console.log(error)
-    // ee.on('log:error', (error) => {
-    //     htmlLog(error)
-    // });
+    // var elem = document.createElement('div');
+    // elem.classList.add("fixed")
+    // elem.innerHTML = `<strong>An error happened&nbsp:&nbsp</strong>${error}</div>`
 
-    // I need to remove the fixed 
-    // document.getElementsByClassName('fixed')
+    // // ee.on('log:error', (error) => {
+    // //     htmlLog(error)
+    // // });
 
-    document.body.parentNode.removeChild(elem)
-    document.body.appendChild(elem)
+    // // I need to remove the fixed 
+    // // document.getElementsByClassName('fixed')
+
+    // document.body.parentNode.removeChild(elem)
+    // document.body.appendChild(elem)
 }
