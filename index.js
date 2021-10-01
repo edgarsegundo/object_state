@@ -9,10 +9,10 @@
 module.exports.create = create
 
 function ObjectState() {
-    var _statePrevious = undefined
-    var _stateCurrent = undefined
-    var _states = []
-    var _transitions = {}
+    var _statePrevious = undefined;
+    var _stateCurrent = undefined;
+    var _states = [];
+    var _transitions = {};
 
     return {
         populateStates: function(states) {
@@ -66,31 +66,23 @@ function ObjectState() {
             }
         },
         fire: async function (event, obj) {
-            try {
-                if (_transitions.hasOwnProperty(_stateCurrent)) {
-                    let events = _transitions[_stateCurrent];    
-                    if (events.hasOwnProperty(event)) {
-                      let list = events[event];    
-                      for (let i = 0; i < list.length; i += 1) {
-                        await list[i](obj, _stateCurrent, event);
-                      }
-                      return true;
-                    }
+            if (_transitions.hasOwnProperty(_stateCurrent)) {
+                let events = _transitions[_stateCurrent];    
+                if (events.hasOwnProperty(event)) {
+                  let list = events[event];    
+                  for (let i = 0; i < list.length; i += 1) {
+                    await list[i](obj, _stateCurrent, event);
                   }
-            } catch (error) {
-                htmlLog(error)
+                  return true;
+                }
             }
             return false;
         },
         setState: function (state, changeCallback) {
-            try {
-                _statePrevious = _stateCurrent;
-                _stateCurrent = state;         
-                if (changeCallback) {
-                    changeCallback(_stateCurrent, _statePrevious)
-                }
-            } catch (error) {
-                htmlLog(error)
+            _statePrevious = _stateCurrent;
+            _stateCurrent = state;         
+            if (changeCallback) {
+                changeCallback(_stateCurrent, _statePrevious);
             }
         },    
         getStateCurrent: function() {
@@ -104,21 +96,4 @@ function ObjectState() {
 
 function create() {
     return ObjectState()
-}
-
-function htmlLog(error) {
-    console.log(error)
-    // var elem = document.createElement('div');
-    // elem.classList.add("fixed")
-    // elem.innerHTML = `<strong>An error happened&nbsp:&nbsp</strong>${error}</div>`
-
-    // // ee.on('log:error', (error) => {
-    // //     htmlLog(error)
-    // // });
-
-    // // I need to remove the fixed 
-    // // document.getElementsByClassName('fixed')
-
-    // document.body.parentNode.removeChild(elem)
-    // document.body.appendChild(elem)
 }
