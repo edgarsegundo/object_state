@@ -1,6 +1,6 @@
 {
   "name": "@edgar.segundo/object_state",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "State Machine Objects",
   "main": "index.js",
   "scripts": {},
