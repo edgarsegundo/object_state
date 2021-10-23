@@ -8,6 +8,10 @@
 
 module.exports.create = create
 
+function create() {
+    return ObjectState();
+}
+
 function ObjectState() {
     var _statePrevious = undefined;
     var _stateCurrent = undefined;
@@ -48,20 +52,11 @@ function ObjectState() {
             else {
                 let events = {};
                 if (!_transitions.hasOwnProperty(state)) {
-                    let list = [];
-                    list.push(action);
-                    events[event] = list;
+                    events[event] = action;
                     _transitions[state] = events;
                 } else {
                     events = _transitions[state];
-                    if (!events.hasOwnProperty(event)) {
-                        let list = [];
-                        list.push(action);
-                        events[event] = list;
-                    } else {
-                        let list = events[event];
-                        list.push(action);
-                    }
+                    events[event] = action;
                 }
             }
         },
@@ -69,11 +64,9 @@ function ObjectState() {
             if (_transitions.hasOwnProperty(_stateCurrent)) {
                 let events = _transitions[_stateCurrent];    
                 if (events.hasOwnProperty(event)) {
-                  let list = events[event];    
-                  for (let i = 0; i < list.length; i += 1) {
-                    await list[i](obj, _stateCurrent, event);
-                  }
-                  return true;
+                    // await list[i](obj, _stateCurrent, event);
+                    await list[i].call(this, obj, _stateCurrent, event);
+                    return true;
                 }
             }
             return false;
@@ -92,8 +85,4 @@ function ObjectState() {
             return _statePrevious;
         }    
     }
-}
-
-function create() {
-    return ObjectState()
 }
