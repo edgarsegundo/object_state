@@ -64,8 +64,7 @@ function ObjectState() {
             if (_transitions.hasOwnProperty(_stateCurrent)) {
                 let events = _transitions[_stateCurrent];    
                 if (events.hasOwnProperty(event)) {
-                    // await list[i](obj, _stateCurrent, event);
-                    await list[i].call(this, obj, _stateCurrent, event);
+                    await events[event].call(this, obj, _stateCurrent, event);
                     return true;
                 }
             }
